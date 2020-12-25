@@ -30,9 +30,7 @@ public class InvokInvokStatisticsServiceImpl implements InvokStatisticsService {
         log.info("interfaceQueue 消费者收到消息 : {}", message);
         InterfaceStatistics interfaceStatistics = JSONUtil.toBean(message, InterfaceStatistics.class);
         Integer insert = invokStatisticsDao.insert(interfaceStatistics);
-        System.out.println("insert " + insert);
-        System.out.println("interfaceStatistics" + interfaceStatistics);
-        System.out.println(interfaceStatistics.getRequest());
+        log.info("interfaceStatistics{}", JSONUtil.toJsonStr(interfaceStatistics));
     }
 
     @Override
@@ -40,10 +38,7 @@ public class InvokInvokStatisticsServiceImpl implements InvokStatisticsService {
 
         log.info("exceptionQueue 消费者收到消息 : {}", message);
         InterfaceStatistics interfaceStatistics = JSONUtil.toBean(message, InterfaceStatistics.class);
-
         invokStatisticsDao.insert(interfaceStatistics);
-
-        System.out.println("interfaceStatistics" + interfaceStatistics);
-        System.out.println(interfaceStatistics.getRequest());
+        log.info("interfaceStatistics{}", JSONUtil.toJsonStr(interfaceStatistics));
     }
 }
