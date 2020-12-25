@@ -27,7 +27,7 @@ public class InvokInvokStatisticsServiceImpl implements InvokStatisticsService {
     @Override
     public void interfaceService(String message) {
 
-        log.info("interfaceQueue 消费者收到消息 : {}", message);
+       // log.info("interfaceQueue 消费者收到消息 : {}", message);
         InterfaceStatistics interfaceStatistics = JSONUtil.toBean(message, InterfaceStatistics.class);
         int flag = invokStatisticsDao.insert(interfaceStatistics);
         log.info("interfaceStatistics : {}", flag > 0 ? "消费成功" : "消费失败");
@@ -36,7 +36,7 @@ public class InvokInvokStatisticsServiceImpl implements InvokStatisticsService {
     @Override
     public void exceptionService(String message) {
 
-        log.info("exceptionQueue 消费者收到消息 : {}", message);
+        //log.info("exceptionQueue 消费者收到消息 : {}", message);
         InterfaceStatistics interfaceStatistics = JSONUtil.toBean(message, InterfaceStatistics.class);
         int flag = invokStatisticsDao.insert(interfaceStatistics);
         log.info("interfaceStatistics : {}", flag > 0 ? "消费成功" : "消费失败");
