@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenshengshu.invoking.models.statisticsInterface.dao.InvokStatisticsDao">
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultType="cn.chenshengshu.invoking.models.statisticsInterface.domain.InterfaceStatistics">
+        select
+        id, url, uri, ip, execute_time, request_time, request, execute_result
+        from service_inteface_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="uri != null and uri != ''">
+                and uri = #{uri}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="executeTime != null">
+                and execute_time = #{executeTime}
+            </if>
+            <if test="requestTime != null">
+                and request_time = #{requestTime}
+            </if>
+            <if test="request != null and request != ''">
+                and request = #{request}
+            </if>
+            <if test="executeResult != null and executeResult != ''">
+                and execute_result = #{executeResult}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into service_inteface_info(url, uri, ip, execute_time, request_time, request, execute_result)
+        values (#{url}, #{uri}, #{ip}, #{executeTime}, #{requestTime}, #{request}, #{executeResult})
+    </insert>
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update service_inteface_info
+        <set>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="uri != null and uri != ''">
+                uri = #{uri},
+            </if>
+            <if test="ip != null and ip != ''">
+                ip = #{ip},
+            </if>
+            <if test="executeTime != null">
+                execute_time = #{executeTime},
+            </if>
+            <if test="requestTime != null">
+                request_time = #{requestTime},
+            </if>
+            <if test="request != null and request != ''">
+                request = #{request},
+            </if>
+            <if test="executeResult != null and executeResult != ''">
+                execute_result = #{executeResult},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+</mapper>

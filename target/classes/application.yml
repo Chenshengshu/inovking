@@ -1,0 +1,6 @@
+server:
+  port: 10699
+
+spring:
+  profiles:
+    active: dev
