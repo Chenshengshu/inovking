@@ -11,12 +11,12 @@ public class InvokStatisticsContorller {
     @Autowired
     private InvokStatisticsService invokStatisticsService;
 
-    @RabbitListener(queues = "interfaceQueue")
+    @RabbitListener(queues = "${rabbitmq-server.interfaceQueue}")
     public void interfaceQueue(String message) {
         invokStatisticsService.interfaceService(message);
     }
 
-    @RabbitListener(queues = "exceptionQueue")
+    @RabbitListener(queues = "${rabbitmq-server.exceptionQueue}")
     public void exceptionQueue(String message) {
         invokStatisticsService.exceptionService(message);
     }
