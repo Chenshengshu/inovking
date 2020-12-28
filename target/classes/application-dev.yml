@@ -47,7 +47,7 @@ spring:
     timeout: 10s
 
   application:
-    name: rabbitmq-customer-2
+    name: rabbitmq-customer
     #配置rabbitMq 服务器
   rabbitmq:
     host: 47.102.130.172
