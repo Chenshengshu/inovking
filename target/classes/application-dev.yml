@@ -59,6 +59,7 @@ spring:
 rabbitmq-server:
   interfaceQueue: interfaceQueue
   exceptionQueue: exceptionQueue
+  wordClassifyQueue: wordClassifyQueue
 
 mybatis:
   mapper-locations: classpath:mapper/**/*Dao.xml

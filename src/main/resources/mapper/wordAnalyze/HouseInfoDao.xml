@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenshengshu.invoking.models.wordAnalyze.dao.HouseInfoDao">
+
+    <resultMap type="cn.chenshengshu.invoking.models.wordAnalyze.domain.HouseInfo" id="HouseInfoMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="houseTitle" column="house_title" jdbcType="VARCHAR"/>
+        <result property="houseDesc" column="house_desc" jdbcType="VARCHAR"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="architectureType" column="architecture_type" jdbcType="VARCHAR"/>
+        <result property="architectureArea" column="architecture_area" jdbcType="VARCHAR"/>
+        <result property="propertyType" column="property_type" jdbcType="VARCHAR"/>
+        <result property="floorType" column="floor_type" jdbcType="VARCHAR"/>
+        <result property="propertyManagement" column="property_management" jdbcType="VARCHAR"/>
+        <result property="propertyFee" column="property_fee" jdbcType="VARCHAR"/>
+        <result property="heatingWay" column="heating_way" jdbcType="VARCHAR"/>
+        <result property="waterWay" column="water_way" jdbcType="VARCHAR"/>
+        <result property="elevatorWay" column="elevator_way" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="county" column="county" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="queryAll" resultMap="HouseInfoMap">
+        <!--通过实体作为筛选条件查询-->
+        select
+        id,
+        house_title,
+        house_desc,
+        image,
+        price,
+        address,
+        architecture_type,
+        architecture_area,
+        property_type,
+        floor_type,
+        property_management,
+        property_fee,
+        heating_way,
+        water_way,
+        elevator_way,
+        province,
+        city,
+        county
+        from house_info
+        where state =1
+        <if test="houseTitle != null and houseTitle != ''">
+            and house_title = #{houseTitle}
+        </if>
+
+        <if test="price != null and price != ''">
+            and price = #{price}
+        </if>
+        <if test="address != null and address != ''">
+            and address = #{address}
+        </if>
+
+        <if test="architectureArea != null and architectureArea != ''">
+            and architecture_area = #{architectureArea}
+        </if>
+
+        <if test="floorType != null and floorType != ''">
+            and floor_type = #{floorType}
+        </if>
+        <if test="province != null and province != ''">
+            and province = #{province}
+        </if>
+        <if test="city != null and city != ''">
+            and city = #{city}
+        </if>
+        <if test="county != null and county != ''">
+            and county = #{county}
+        </if>
+
+
+    </select>
+</mapper>

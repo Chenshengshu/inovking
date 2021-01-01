@@ -1,11 +1,14 @@
 package cn.chenshengshu.invoking.HanLP;
 
+import cn.chenshengshu.invoking.models.wordAnalyze.dao.HouseInfoDao;
+import cn.chenshengshu.invoking.models.wordAnalyze.domain.HouseInfo;
+import cn.chenshengshu.invoking.models.wordAnalyze.service.WordClassifyService;
 import cn.chenshengshu.invoking.util.HanLPUtils;
 import com.hankcs.hanlp.HanLP;
-import com.hankcs.hanlp.seg.Segment;
 import com.hankcs.hanlp.seg.common.Term;
 import com.hankcs.hanlp.tokenizer.StandardTokenizer;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
@@ -18,6 +21,13 @@ import java.util.Set;
  */
 @SpringBootTest
 public class HanLPUtilsEnumTest {
+
+
+    @Autowired(required = false)
+    private HouseInfoDao houseInfoDao;
+
+    @Autowired
+    private WordClassifyService wordClassifyService;
 
     @Test
     public void HanLpTest() {
@@ -79,7 +89,23 @@ public class HanLPUtilsEnumTest {
         for (String key : keys) {
             System.out.println(key);
         }
+    }
 
+    @Test
+    public void NLPTest1() {
+        HouseInfo houseInfo = new HouseInfo();
+
+        List<HouseInfo> houseInfos = houseInfoDao.queryAll(houseInfo);
+
+        for (HouseInfo info : houseInfos) {
+            System.out.println(info);
+        }
+    }
+
+    @Test
+    public void NLPServiceTest() {
+        wordClassifyService.statisticsSave();
 
     }
+
 }

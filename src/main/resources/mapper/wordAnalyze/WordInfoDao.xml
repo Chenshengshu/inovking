@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenshengshu.invoking.models.wordAnalyze.dao.WordInfoDao">
+
+    <resultMap type="cn.chenshengshu.invoking.models.wordAnalyze.domain.WordInfo" id="ServiceWordInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="wordName" column="word_name" jdbcType="VARCHAR"/>
+        <result property="number" column="number" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insertWordInfo" keyProperty="id" useGeneratedKeys="true">
+        insert into renting.service_word_info(word_name, number, create_time, update_time)
+        values (#{wordName}, #{number}, #{createTime}, #{updateTime})
+
+    </insert>
+    <update id="updateWordNumber">
+        update service_word_info
+        <set>
+            <if test="number != null">
+                number = #{number},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where state = 1 and id = #{id}
+    </update>
+
+
+    <select id="queryAll" resultMap="ServiceWordInfoMap">
+        select
+        id,
+        word_name,
+        number,
+        create_time,
+        update_time,
+        state
+        from service_word_info
+        where state = 1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="wordName != null and wordName != ''">
+            and word_name = #{wordName}
+        </if>
+        <if test="number != null">
+            and number = #{number}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime}
+        </if>
+    </select>
+    <select id="query" resultMap="ServiceWordInfoMap">
+        select
+        id,
+        word_name,
+        number,
+        create_time,
+        update_time,
+        state
+        from renting.service_word_info
+        where state = 1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="wordName != null and wordName != ''">
+            and word_name = #{wordName}
+        </if>
+        <if test="number != null">
+            and number = #{number}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime}
+        </if>
+
+    </select>
+</mapper>
