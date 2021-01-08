@@ -25,17 +25,19 @@ public class InvokInvokStatisticsServiceImpl implements InvokStatisticsService {
 
 
     @Override
-    public void interfaceService(String message) {
+    public Integer interfaceService(String message) {
 
-       // log.info("interfaceQueue 消费者收到消息 : {}", message);
+        // log.info("interfaceQueue 消费者收到消息 : {}", message);
         InterfaceStatistics interfaceStatistics = JSONUtil.toBean(message, InterfaceStatistics.class);
         int flag = invokStatisticsDao.insert(interfaceStatistics);
         log.info("interfaceStatistics : {}", flag > 0 ? "消费成功" : "消费失败");
+        return flag;
     }
 
     @Override
     public void exceptionService(String message) {
-
+        
+        //todo 异常消息接受到后 后续进行钉钉提醒 将消息转发到钉钉提醒服务处理
         //log.info("exceptionQueue 消费者收到消息 : {}", message);
         InterfaceStatistics interfaceStatistics = JSONUtil.toBean(message, InterfaceStatistics.class);
         int flag = invokStatisticsDao.insert(interfaceStatistics);

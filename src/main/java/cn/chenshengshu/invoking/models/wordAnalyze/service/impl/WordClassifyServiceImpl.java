@@ -1,5 +1,6 @@
 package cn.chenshengshu.invoking.models.wordAnalyze.service.impl;
 
+import cn.chenshengshu.invoking.common.HanLPEnum;
 import cn.chenshengshu.invoking.models.wordAnalyze.dao.HouseInfoDao;
 import cn.chenshengshu.invoking.models.wordAnalyze.dao.WordInfoDao;
 import cn.chenshengshu.invoking.models.wordAnalyze.domain.HouseInfo;
@@ -79,7 +80,7 @@ public class WordClassifyServiceImpl implements WordClassifyService {
                     break;
                 }
                 //String word = "";
-                if (termList.get(i).nature.toString() == "a" && (termList.get(i + 1).nature.toString() == "n" || termList.get(i + 1).nature.toString() == "nz")) {
+                if (termList.get(i).nature.toString() == HanLPEnum.Nature.NATURE_A.key && (termList.get(i + 1).nature.toString() == HanLPEnum.Nature.NATURE_N.key || termList.get(i + 1).nature.toString() == HanLPEnum.Nature.NATURE_NZ.key)) {
                     String word = termList.get(i).word + termList.get(i + 1).word;
                     i++;
                     if (!map.containsKey(word)) {
@@ -92,12 +93,6 @@ public class WordClassifyServiceImpl implements WordClassifyService {
                     }
 
                 }
-               /* if ((termList.get(i).nature.toString() == "n" || termList.get(i).nature.toString() == "vn" || termList.get(i).nature.toString() == "v") && termList.get(i + 1).nature.toString() == "a") {
-                    word = termList.get(i).word + termList.get(i + 1).word;
-                    i++;
-                }*/
-
-
             }
         }
         return map;

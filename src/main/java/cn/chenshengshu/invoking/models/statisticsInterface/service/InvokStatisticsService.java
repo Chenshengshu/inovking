@@ -6,7 +6,7 @@ package cn.chenshengshu.invoking.models.statisticsInterface.service;
  */
 public interface InvokStatisticsService {
 
-    void interfaceService(String message);
+    Integer interfaceService(String message);
 
     void exceptionService(String message);
 
