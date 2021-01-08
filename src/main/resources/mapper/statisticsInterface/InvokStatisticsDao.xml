@@ -41,7 +41,13 @@
         insert into service_inteface_info(url, uri, ip, execute_time, request_time, request, execute_result)
         values (#{url}, #{uri}, #{ip}, #{executeTime}, #{requestTime}, #{request}, #{executeResult})
     </insert>
-
+    <insert id="insertList" keyProperty="id" useGeneratedKeys="true">
+        insert into service_inteface_info(url, uri, ip, execute_time, request_time, request, execute_result)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.url}, #{item.uri}, #{item.ip}, #{item.executeTime}, #{item.requestTime}, #{item.request}, #{item.executeResult})
+        </foreach>
+    </insert>
 
     <!--通过主键修改数据-->
     <update id="update">

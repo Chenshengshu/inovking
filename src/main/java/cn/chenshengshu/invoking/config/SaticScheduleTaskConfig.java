@@ -17,6 +17,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -48,7 +50,7 @@ public class SaticScheduleTaskConfig {
     private String QUEUE_NAME;
 
     @Autowired(required = false)
-    private InvokStatisticsService InvokStatisticsService;
+    private InvokStatisticsService invokStatisticsService;
 
     @Autowired
     private Connection connection;
@@ -68,6 +70,7 @@ public class SaticScheduleTaskConfig {
     @Scheduled(cron = "0 * * * * ? ")
     public void pullInterfaceTasks() throws IOException {
         int flag = 0;
+        List<InterfaceStatistics> interfaceStatisticsList = new ArrayList<>();
         Long startTime = System.currentTimeMillis();
         Channel channel = connection.createChannel();
         //定义一个队列
@@ -78,8 +81,11 @@ public class SaticScheduleTaskConfig {
         //查看队列中是否存在消息并消费消息
         while (Objects.nonNull(resp)) {
             String message = new String(resp.getBody(), "UTF-8");
-            flag += InvokStatisticsService.interfaceService(message);
+            interfaceStatisticsList.add(JSONUtil.toBean(message, InterfaceStatistics.class));
             resp = channel.basicGet(QUEUE_NAME, AUTO_ACK);
+        }
+        if (interfaceStatisticsList.size() > 0) {
+            flag = invokStatisticsService.interfaceServiceList(interfaceStatisticsList);
         }
         Long endTime = System.currentTimeMillis();
         log.info("QUEUE_NAME : {} 完成处理数据时间 : {}", QUEUE_NAME, Helper.getLocalDateTime().toString());
