@@ -16,4 +16,7 @@ public interface InvokStatisticsService {
 
     Integer interfaceServiceList(List<InterfaceStatistics> list);
 
+    void numberStatisticsQueue(String message);
+
+
 }

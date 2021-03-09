@@ -60,6 +60,7 @@ rabbitmq-server:
   interfaceQueue: interfaceQueue
   exceptionQueue: exceptionQueue
   wordClassifyQueue: wordClassifyQueue
+  numberStatisticsQueue: numberStatisticsQueue
 
 mybatis:
   mapper-locations: classpath:mapper/**/*Dao.xml

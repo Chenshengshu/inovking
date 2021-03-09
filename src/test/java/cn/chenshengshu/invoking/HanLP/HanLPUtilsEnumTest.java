@@ -7,11 +7,22 @@ import cn.chenshengshu.invoking.util.HanLPUtils;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.seg.common.Term;
 import com.hankcs.hanlp.tokenizer.StandardTokenizer;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
@@ -106,6 +117,47 @@ public class HanLPUtilsEnumTest {
     public void NLPServiceTest() {
         wordClassifyService.statisticsSave();
 
+    }
+
+    @Test
+    public void test() {
+
+        String strURL = "https://bj.lianjia.com/ershoufang/rs/";
+        URL url;
+        try {
+            url = new URL(strURL);
+            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+            InputStreamReader input = new InputStreamReader(httpConn.getInputStream(), "utf-8");
+
+
+            BufferedReader buf = new BufferedReader(input);
+
+            String line = "";
+            StringBuilder conf = new StringBuilder();
+            while ((line = buf.readLine()) != null) {
+                // System.out.println(line);
+                conf.append(line);
+            }
+            Document parse = Jsoup.parse(conf.toString());
+            Elements elementsByAttributeValue = parse.getElementsByAttributeValue("class", "info clear");
+            System.out.println(elementsByAttributeValue.html());
+
+            Elements select = parse.select("a[href]");
+
+            Elements href = parse.select("href");
+
+            System.out.println(select.html());
+
+            System.out.println(href.html());
+            //     System.out.println(href.html());
+
+
+            //   System.out.println(conf);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
     }
 
 }

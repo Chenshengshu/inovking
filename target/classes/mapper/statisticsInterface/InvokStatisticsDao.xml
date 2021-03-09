@@ -35,13 +35,27 @@
             </if>
         </where>
     </select>
+    <select id="findHouseDetail"
+            resultType="cn.chenshengshu.invoking.models.statisticsInterface.domain.HouseDetail">
+        select  *from house_look_number where house_id = #{houseId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into service_inteface_info(url, uri, ip, execute_time, request_time, request, execute_result)
         values (#{url}, #{uri}, #{ip}, #{executeTime}, #{requestTime}, #{request}, #{executeResult})
     </insert>
-
+    <insert id="insertList" keyProperty="id" useGeneratedKeys="true">
+        insert into service_inteface_info(url, uri, ip, execute_time, request_time, request, execute_result)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.url}, #{item.uri}, #{item.ip}, #{item.executeTime}, #{item.requestTime}, #{item.request}, #{item.executeResult})
+        </foreach>
+    </insert>
+    <insert id="insertHouseLookNumber">
+        insert into house_look_number (house_id, number, update_time)
+        values (#{houseId}, #{number}, #{updateTime})
+    </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
@@ -67,6 +81,15 @@
             </if>
             <if test="executeResult != null and executeResult != ''">
                 execute_result = #{executeResult},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateHouseLookNumber">
+        update house_look_number
+        <set>
+            <if test="number != null and number!= ''">
+                number  = #{number}
             </if>
         </set>
         where id = #{id}

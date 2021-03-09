@@ -1,16 +1,18 @@
 package cn.chenshengshu.invoking.models.statisticsInterface.service.impl;
 
 import cn.chenshengshu.invoking.models.statisticsInterface.dao.InvokStatisticsDao;
+import cn.chenshengshu.invoking.models.statisticsInterface.domain.HouseDetail;
 import cn.chenshengshu.invoking.models.statisticsInterface.domain.InterfaceStatistics;
+import cn.chenshengshu.invoking.models.statisticsInterface.dto.request.HouseDetailReq;
 import cn.chenshengshu.invoking.models.statisticsInterface.service.InvokStatisticsService;
+import cn.chenshengshu.invoking.util.Helper;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 /**
  * @author chenchengshu
@@ -34,7 +36,7 @@ public class InvokInvokStatisticsServiceImpl implements InvokStatisticsService {
         log.info("interfaceStatistics : {}", flag > 0 ? "消费成功" : "消费失败");
         return flag;
     }
-    
+
     @Override
     public Integer interfaceServiceList(List<InterfaceStatistics> list) {
         Integer flag = invokStatisticsDao.insertList(list);
@@ -52,4 +54,33 @@ public class InvokInvokStatisticsServiceImpl implements InvokStatisticsService {
     }
 
 
+    @Override
+    public void numberStatisticsQueue(String message) {
+        HouseDetailReq houseDetailReq = JSONUtil.toBean(message, HouseDetailReq.class);
+        HouseDetail houseDetail = invokStatisticsDao.findHouseDetail(houseDetailReq.getHouseId());
+        if (Objects.isNull(houseDetail)) {
+            //insert
+            HouseDetail houseNumber = new HouseDetail();
+            houseNumber.setHouseId(houseDetailReq.getHouseId());
+            houseNumber.setNumber(1);
+            houseNumber.setUpdateTime(Helper.getLocalDateTime());
+            Integer flag = invokStatisticsDao.insertHouseLookNumber(houseNumber);
+            if (flag <= 0) {
+                log.info("房屋访问统计出错！房屋id{}", houseDetailReq.getHouseId());
+            }
+
+        } else {
+            //update
+            int number = houseDetail.getNumber() + 1;
+            HouseDetail houseNumber = new HouseDetail();
+            houseNumber.setId(houseDetail.getId());
+            houseNumber.setNumber(number);
+            houseNumber.setUpdateTime(Helper.getLocalDateTime());
+            Integer flag = invokStatisticsDao.updateHouseLookNumber(houseNumber);
+            if (flag <= 0) {
+                log.info("房屋访问统计出错！房屋id{}", houseDetailReq.getHouseId());
+            }
+        }
+
+    }
 }

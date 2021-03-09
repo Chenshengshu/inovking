@@ -1,5 +1,6 @@
 package cn.chenshengshu.invoking.models.statisticsInterface.dao;
 
+import cn.chenshengshu.invoking.models.statisticsInterface.domain.HouseDetail;
 import cn.chenshengshu.invoking.models.statisticsInterface.domain.InterfaceStatistics;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,6 +19,12 @@ public interface InvokStatisticsDao {
     Integer insertList(@Param("list") List<InterfaceStatistics> list);
 
     Integer update(InterfaceStatistics interfaceStatistics);
+
+    HouseDetail findHouseDetail(String houseId);
+
+    Integer insertHouseLookNumber(HouseDetail houseDetail);
+
+    Integer updateHouseLookNumber(HouseDetail houseDetail);
 
 
 }
