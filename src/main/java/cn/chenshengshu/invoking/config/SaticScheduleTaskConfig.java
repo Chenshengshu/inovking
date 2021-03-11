@@ -16,7 +16,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.IOException;
-import java.io.ObjectStreamClass;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
