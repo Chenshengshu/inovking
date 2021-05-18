@@ -83,4 +83,12 @@ public class InvokInvokStatisticsServiceImpl implements InvokStatisticsService {
         }
 
     }
+
+    @Override
+    public void titleWordQueue(String message) {
+
+
+    }
+
+
 }

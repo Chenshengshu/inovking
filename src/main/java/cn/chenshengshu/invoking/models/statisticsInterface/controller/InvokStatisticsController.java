@@ -20,12 +20,17 @@ public class InvokStatisticsController {
         invokStatisticsService.exceptionService(message);
     }
 
-    @RabbitListener(queues = "${rabbitmq-server.numberStatisticsQueue}")
+    /*@RabbitListener(queues = "${rabbitmq-server.titleWordQueue}")
+    public void titleWordQueueQueue(String message) {
+        invokStatisticsService.titleWordQueue(message);
+    }
+*/
+
+
+   /* @RabbitListener(queues = "${rabbitmq-server.numberStatisticsQueue}")
     public void numberStatisticsQueue(String message) {
         invokStatisticsService.numberStatisticsQueue(message);
-    }
-
-
+    }*/
 
 
 }

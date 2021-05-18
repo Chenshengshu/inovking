@@ -121,42 +121,10 @@ public class HanLPUtilsEnumTest {
 
     @Test
     public void test() {
-
-        String strURL = "https://bj.lianjia.com/ershoufang/rs/";
-        URL url;
-        try {
-            url = new URL(strURL);
-            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-            InputStreamReader input = new InputStreamReader(httpConn.getInputStream(), "utf-8");
-
-
-            BufferedReader buf = new BufferedReader(input);
-
-            String line = "";
-            StringBuilder conf = new StringBuilder();
-            while ((line = buf.readLine()) != null) {
-                // System.out.println(line);
-                conf.append(line);
-            }
-            Document parse = Jsoup.parse(conf.toString());
-            Elements elementsByAttributeValue = parse.getElementsByAttributeValue("class", "info clear");
-            System.out.println(elementsByAttributeValue.html());
-
-            Elements select = parse.select("a[href]");
-
-            Elements href = parse.select("href");
-
-            System.out.println(select.html());
-
-            System.out.println(href.html());
-            //     System.out.println(href.html());
-
-
-            //   System.out.println(conf);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
+        String text = "近地铁的超大房子";
+        Set<String> sets = HanLPUtils.tentativeSegment(text);
+        for (String set : sets) {
+            System.out.println(set);
         }
     }
 

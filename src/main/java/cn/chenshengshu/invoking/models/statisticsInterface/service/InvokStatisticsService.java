@@ -18,5 +18,7 @@ public interface InvokStatisticsService {
 
     void numberStatisticsQueue(String message);
 
+    void titleWordQueue(String message);
+
 
 }
